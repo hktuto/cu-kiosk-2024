@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+      <!-- <header id="appHeader">
+        <img src="/assets/banner.jpg" alt="headerBanner" onClick="reload();">
+      </header> -->
+      <div id="infoButton">
+            <img src="/assets/home.png" id="home_btn" onClick="goHome();" style="height:40px"/>
+            <img src="/assets/about-chin.png" id="info_btn"  onClick="goInfo();" style="height:40px"/>
+      </div>
+      </div>
+        <iframe id="myframe" src="https://hklit.lib.cuhk.edu.hk/" frameborder="0" 
+        sandbox="allow-same-origin allow-scripts allow-popups allow-forms" 
+            onLoad="pageLoaded(this);"
+        >
+        </iframe>
+    <script>
+        var mainIframe;
+
+        const baseUrl = 'https://hklit.lib.cuhk.edu.hk/';
+        var interval = setInterval(() => {
+                    removeLink()
+                }, 500)
+        let showInfoButton = false;
+        function goInfo(){
+            document.getElementById("myframe").classList.remove('ready');
+            document.getElementById("infoButton").classList.remove('ready');
+            mainIframe.src = baseUrl
+        }
+        function goHome(){
+            document.getElementById("myframe").classList.remove('ready');
+            document.getElementById("infoButton").classList.remove('ready');
+            mainIframe.src = baseUrl
+        }
+        function reload(){
+            window.location.reload();
+        }
+
+        function ratioCoords (coords, ratio) {
+            coord_arr = coords.split(",");
+
+            for(i=0; i < coord_arr.length; i++) {
+                coord_arr[i] = Math.round(ratio * coord_arr[i]);
+            }
+
+            return coord_arr.join(',');
+        }
+        function pageLoaded(obj) {
+            
+            // showInfoButton = obj.src === "https://hklit.lib.cuhk.edu.hk/lovf-index/"
+            mainIframe = obj;
+            const doc = obj.contentWindow.document;
+            const body = doc.body;
+            const style = document.createElement('style');
+            const script = document.createElement('script');
+            script.innerHTML = `
+                
+            `
+            style.type = 'text/css';
+            const  css = `
+                // .page-content > .side-bar-widget.bulma, button[data-for="downloadButton"] {
+                //     display: none !important;
+                // }
+                // .side-bar-widget + .flex-fill {
+                //     margin: 0 auto;
+                //     width: 823px!important;
+                // }
+                .page-id-6419 .flex-fill {
+                    // transform:scale(1.4);
+                }
+                .page-content > .side-bar-widget.bulma .menu-list .menu-item:nth-child(n+3) {
+                    display: none !important;
+                }
+                .side-bar-widget + .flex-fill{
+                    width: 600px !important;
+                    flex: 1 0 auto !important;
+                }
+                
+
+                `
+            style.appendChild(document.createTextNode(css));
+            body.appendChild(style)
+            body.appendChild(script);
+            const bgimg = doc.querySelector(`img[usemap='#image-map']`);
+            if(bgimg){
+                bgimg.src = "http:localhost:3000/assets/home_bg.svg";
+                showInfoButton = true
+                bgimg.setAttribute('width', '823');
+                bgimg.decode().then(() => {
+                    
+                    console.log('img loaded');
+                    const  ratio = img.width / 823;
+                    // loop map area to resize
+                })
+            }else{
+                showInfoButton = false
+            }
+            document.getElementById("myframe").classList.add('ready');
+            document.getElementById("infoButton").classList.add('ready');
+            const banner = doc.querySelector(".bulma .hero");
+            if(banner){
+                banner.innerHTML = `
+                <header id="appHeader">
+                    <img src="http:localhost:3000/assets/banner.svg" alt="headerBanner">
+                </header> 
+                `
+            }else{
+                console.log("banner not found")
+            }
+            banner.addEventListener('click', ()=>{
+                reload();
+                console.log('showInfoButton = true');
+                showInfoButton = true;
+            })
+
+            // find all target top link
+            const topLink = doc.querySelectorAll('[target="_top"]');
+            if(topLink.length > 0){
+                topLink.forEach(el => el.setAttribute('target', "_self"));
+            }
+            body.addEventListener('click', function(e){
+                    if(e.target.tagName.toLowerCase() === 'area' || (e.target.tagName.toLowerCase() === 'a' && e.target.href.includes("https://hklit.lib.cuhk.edu.hk/lovf"))){
+                        document.getElementById("myframe").classList.remove('ready');
+                    }
+                    howInfoButton = false
+                    
+            });
+            
+            // removeLink();
+            document.getElementById("info_btn").hidden = !showInfoButton;
+            document.getElementById("home_btn").hidden = showInfoButton;
+            
+        }
+        function removeLink() {
+            var doc = mainIframe.contentWindow.document
+                var anchors = doc.getElementsByTagName("a");
+                for (var i = 0; i < anchors.length; i++) {
+                    const href = anchors[i].href;
+                    if(!href.includes(baseUrl) && !href.includes("http://localhost:3000") ){
+                        anchors[i].onclick = function() {return false;};
+                    }
+                    anchors[i].target = '_self'
+                    // check iframe 
+                    var iframe = doc.querySelector('iframe[height="800px"]');
+                    if(iframe){
+                        const idoc = iframe.contentWindow.document;
+                        idoc.querySelector('#toolbarViewerRight').hidden = true;           
+                    }
+            }
+        }
+    </script>
+    <style>
+        html, body {
+             width:100vw;
+             height: 100vh;
+             padding: 0;
+             margin:0;
+             background: #F4F4F4 ;
+        }
+        
+        #myframe {
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            opacity: 0;
+            /* display: none; */
+            transition: opacity .2s ease-in-out;
+        }
+        #myframe.ready{
+            opacity: 1;
+            display:block;
+        }
+        #appHeader {
+            width:100%;
+            display: flex;
+        }
+        #appHeader img {
+            width: 100%;
+            
+        }
+        
+        #infoButton{
+            position: fixed;
+            left:10px;
+            bottom:10px;
+            display: flex;
+            flex-flow: row nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            opacity: 0;
+            transition: opacity .2s ease-in-out;
+        }
+        #infoButton.ready{
+            opacity: 1;
+        }
+        #infoButton img {
+            margin-right: 10px;
+        }
+        </style>
+    </style>
+  </body>
+</html>

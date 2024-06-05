@@ -1,0 +1,29 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>intro</title>
+    <style>
+      body,
+      html {
+        padding: 0;
+        margin: 0;
+      }
+      .appbg {
+        width: 100vw;
+        height: 100vh;
+        background: url("/assets/bg-01.jpg");
+        background-size: cover;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="appbg" onCLick="goHome();"></div>
+    <script>
+      function goHome() {
+        window.location = "/";
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+.page-content > .bulma.flex-full-width,
+.page-background > div:last-child {
+  display: none !important;
+}
+.page-background {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

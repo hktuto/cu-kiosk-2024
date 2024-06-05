@@ -1,0 +1,45 @@
+{
+  "name": "cu-kiosk-2024",
+  "version": "0.0.1",
+  "main": "src/main.js",
+  "license": "ISC",
+  "private": true,
+  "build": {
+    "productName": "CUHK Files",
+    "appId": "com.cuhk.files",
+    "mac": {
+      "target": "dmg"
+    },
+    "nsis": {
+      "oneClick": false
+    },
+    "dmg": {
+      "icon": "assets/icon.icns"
+    },
+    "extraFiles": [
+      "assets"
+    ]
+  },
+  "scripts": {
+    "dev": "nodemon src/dev.js",
+    "electron": "electron src/main",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "dist": "electron-builder"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "electron-squirrel-startup": "^1.0.0",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.13"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.0-beta.57",
+    "@electron-forge/maker-deb": "^6.0.0-beta.57",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.57",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.57",
+    "@electron-forge/maker-zip": "^6.0.0-beta.57",
+    "electron": "^13.1.7",
+    "electron-builder": "^22.13.1"
+  }
+}
