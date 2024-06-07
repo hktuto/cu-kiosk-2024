@@ -7,11 +7,27 @@
   "build": {
     "productName": "CUHK Files",
     "appId": "com.cuhk.files",
+    "asar": false,
     "mac": {
       "target": "dmg"
     },
     "nsis": {
-      "oneClick": false
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "deleteAppDataOnUninstall": false
+    },
+    "win": {
+      "signAndEditExecutable": false,
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "CUHK Files"
     },
     "dmg": {
       "icon": "assets/icon.icns"
@@ -25,7 +41,7 @@
     "electron": "electron src/main",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "dist": "electron-builder"
+    "dist": "electron-builder --win --x64"
   },
   "dependencies": {
     "cors": "^2.8.5",

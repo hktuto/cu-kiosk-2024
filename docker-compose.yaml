@@ -1,0 +1,9 @@
+  services:
+    lib-kiosks:
+      build: .
+      command: yarn dist
+      working_dir: /app
+      ports:
+        - "3000:3000"
+      volumes:
+        - .:/app
