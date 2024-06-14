@@ -9,7 +9,8 @@
     "appId": "com.cuhk.files",
     "asar": false,
     "mac": {
-      "target": "dmg"
+      "target": "dmg",
+      "icon": "./build/icons/icon.icns"
     },
     "nsis": {
       "oneClick": false,
@@ -19,6 +20,7 @@
     },
     "win": {
       "signAndEditExecutable": false,
+      "icon": "./build/icons/icon.png",
       "target": [
         {
           "target": "nsis",
@@ -33,8 +35,12 @@
       "icon": "assets/icon.icns"
     },
     "extraFiles": [
-      "assets"
-    ]
+      "assets",
+      "./build/**/*" 
+    ],
+    "directories": {
+      "buildResources": "public" 
+    }
   },
   "scripts": {
     "dev": "nodemon src/dev.js",

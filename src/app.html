@@ -10,9 +10,10 @@
       <!-- <header id="appHeader">
         <img src="/assets/banner.jpg" alt="headerBanner" onClick="reload();">
       </header> -->
-      <div id="infoButton">
+      <div id="infoButton" class="ready">
             <img src="/assets/home.png" id="home_btn" onClick="goHome();" style="height:40px"/>
-            <img src="/assets/about-chin.png" id="info_btn"  onClick="goInfo();" style="height:40px"/>
+            <!-- <img src="/assets/about-chin.png" id="info_btn"  onClick="goInfo();" style="height:40px"/> -->
+            <img src="/assets/back.png" id="back_btn" onClick="goBack()" style="height:40px" />
       </div>
       </div>
         <iframe id="myframe" src="https://hklit.lib.cuhk.edu.hk/" frameborder="0" 
@@ -27,15 +28,19 @@
         var interval = setInterval(() => {
                     removeLink()
                 }, 500)
-        let showInfoButton = false;
+        let showInfoButton = true;
+        function goBack(){
+            document.getElementById("myframe").classList.remove('ready');
+            mainIframe.contentWindow.history.back();
+        }
         function goInfo(){
             document.getElementById("myframe").classList.remove('ready');
-            document.getElementById("infoButton").classList.remove('ready');
-            mainIframe.src = baseUrl
+            // document.getElementById("infoButton").classList.remove('ready');
+            mainIframe.src = 'https://hklit.lib.cuhk.edu.hk/lovf-about/'
         }
         function goHome(){
             document.getElementById("myframe").classList.remove('ready');
-            document.getElementById("infoButton").classList.remove('ready');
+            // document.getElementById("infoButton").classList.remove('ready');
             mainIframe.src = baseUrl
         }
         function reload(){
@@ -52,7 +57,6 @@
             return coord_arr.join(',');
         }
         function pageLoaded(obj) {
-            
             // showInfoButton = obj.src === "https://hklit.lib.cuhk.edu.hk/lovf-index/"
             mainIframe = obj;
             const doc = obj.contentWindow.document;
@@ -72,9 +76,9 @@
                 //     width: 823px!important;
                 // }
                 .page-id-6419 .flex-fill {
-                    // transform:scale(1.4);
+                    // transform:scale(1.2);
                 }
-                .page-content > .side-bar-widget.bulma .menu-list .menu-item:nth-child(n+3) {
+                .page-content > .side-bar-widget.bulma .menu-list .menu-item:nth-child(n+4) {
                     display: none !important;
                 }
                 .side-bar-widget + .flex-fill{
@@ -94,15 +98,16 @@
                 bgimg.setAttribute('width', '823');
                 bgimg.decode().then(() => {
                     
-                    console.log('img loaded');
                     const  ratio = img.width / 823;
                     // loop map area to resize
                 })
             }else{
                 showInfoButton = false
             }
-            document.getElementById("myframe").classList.add('ready');
-            document.getElementById("infoButton").classList.add('ready');
+            setTimeout(() => {
+                document.getElementById("myframe").classList.add('ready');
+                // document.getElementById("infoButton").classList.add('ready');
+            },50)
             const banner = doc.querySelector(".bulma .hero");
             if(banner){
                 banner.innerHTML = `
@@ -115,7 +120,6 @@
             }
             banner.addEventListener('click', ()=>{
                 reload();
-                console.log('showInfoButton = true');
                 showInfoButton = true;
             })
 
@@ -125,25 +129,30 @@
                 topLink.forEach(el => el.setAttribute('target', "_self"));
             }
             body.addEventListener('click', function(e){
-                    if(e.target.tagName.toLowerCase() === 'area' || (e.target.tagName.toLowerCase() === 'a' && e.target.href.includes("https://hklit.lib.cuhk.edu.hk/lovf"))){
+                console.log("body click", e.target.href)
+                    if(e.target.tagName.toLowerCase() === 'area' || (e.target.tagName.toLowerCase() === 'a' &&e.target.href.includes(baseUrl) && e.target.href !== baseUrl+'#')){
+                        console.log(e.target.href)
                         document.getElementById("myframe").classList.remove('ready');
                     }
-                    howInfoButton = false
                     
             });
             
             // removeLink();
-            document.getElementById("info_btn").hidden = !showInfoButton;
-            document.getElementById("home_btn").hidden = showInfoButton;
+            // document.getElementById("home_btn").hidden = showInfoButton;
             
         }
         function removeLink() {
+            if(!mainIframe?.contentWindow?.document) return
             var doc = mainIframe.contentWindow.document
                 var anchors = doc.getElementsByTagName("a");
                 for (var i = 0; i < anchors.length; i++) {
                     const href = anchors[i].href;
                     if(!href.includes(baseUrl) && !href.includes("http://localhost:3000") ){
-                        anchors[i].onclick = function() {return false;};
+                        anchors[i].onclick = function() {
+                            // open prompt
+                            alert('此連結不能在本程式打開 \n This link cannot open within this app.');
+                            return false;
+                        };
                     }
                     anchors[i].target = '_self'
                     // check iframe 
@@ -167,13 +176,14 @@
         #myframe {
             top:0;
             left:0;
-            width:100%;
+            width:99%;
             height:100%;
             opacity: 0;
             /* display: none; */
             transition: opacity .2s ease-in-out;
         }
         #myframe.ready{
+            width:100%;
             opacity: 1;
             display:block;
         }
@@ -194,8 +204,7 @@
             flex-flow: row nowrap;
             justify-content: flex-start;
             align-items: center;
-            opacity: 0;
-            transition: opacity .2s ease-in-out;
+            opacity: 1;
         }
         #infoButton.ready{
             opacity: 1;
