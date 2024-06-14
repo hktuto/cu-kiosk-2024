@@ -1,6 +1,6 @@
 module.exports = {
   packagerConfig: {
-    name: "CUHK Files",
+    name: "CUHK_app",
     icon: "assets/icon.icns",
   },
   makers: [
