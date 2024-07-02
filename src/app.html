@@ -130,7 +130,11 @@
             }
             body.addEventListener('click', function(e){
                 console.log("body click", e.target.href)
+                
                     if(e.target.tagName.toLowerCase() === 'area' || (e.target.tagName.toLowerCase() === 'a' &&e.target.href.includes(baseUrl) && e.target.href !== baseUrl+'#')){
+                        if(e.target.href.includes('https://hklit.lib.cuhk.edu.hk/explore/')){
+                            return
+                        }
                         console.log(e.target.href)
                         document.getElementById("myframe").classList.remove('ready');
                     }
@@ -150,11 +154,14 @@
                     if(!href.includes(baseUrl) && !href.includes("http://localhost:3000") ){
                         anchors[i].onclick = function() {
                             // open prompt
-                            alert('此連結不能在本程式打開 \n This link cannot open within this app.');
+                            alert('此頁面不能於程式中展示，請瀏覽網頁版hklit.lib.cuhk.edu.hk以瀏覽相關內容。 \n This page cannot be shown in this kiosk. Please visit hklit.lib.cuhk.edu.hk for more information.');
                             return false;
                         };
                     }
                     anchors[i].target = '_self'
+                    if(href === 'https://hklit.lib.cuhk.edu.hk/%e8%81%af%e7%b5%a1%e6%88%91%e5%80%91/') {
+                        anchors[i].href = 'https://hklit.lib.cuhk.edu.hk/contact-us/'
+                    }
                     // check iframe 
                     var iframe = doc.querySelector('iframe[height="800px"]');
                     if(iframe){
