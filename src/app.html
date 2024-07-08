@@ -11,12 +11,12 @@
         <img src="/assets/banner.jpg" alt="headerBanner" onClick="reload();">
       </header> -->
       <div id="infoButton" class="ready">
+            <img src="/assets/goDB-01.png" id="info_btn"  onClick="goIndex();" style="height:40px"/>
             <img src="/assets/home.png" id="home_btn" onClick="goHome();" style="height:40px"/>
-            <!-- <img src="/assets/about-chin.png" id="info_btn"  onClick="goInfo();" style="height:40px"/> -->
             <img src="/assets/back.png" id="back_btn" onClick="goBack()" style="height:40px" />
       </div>
       </div>
-        <iframe id="myframe" src="https://hklit.lib.cuhk.edu.hk/" frameborder="0" 
+        <iframe id="myframe" src="https://hklit.lib.cuhk.edu.hk/lovf-index/" frameborder="0" 
         sandbox="allow-same-origin allow-scripts allow-popups allow-forms" 
             onLoad="pageLoaded(this);"
         >
@@ -24,11 +24,16 @@
     <script>
         var mainIframe;
 
-        const baseUrl = 'https://hklit.lib.cuhk.edu.hk/';
+        const baseUrl = 'https://hklit.lib.cuhk.edu.hk/lovf-index/';
         var interval = setInterval(() => {
                     removeLink()
                 }, 500)
         let showInfoButton = true;
+        function goIndex(){
+            document.getElementById("myframe").classList.remove('ready');
+            // document.getElementById("infoButton").classList.remove('ready');
+            mainIframe.src = 'https://hklit.lib.cuhk.edu.hk/'
+        }
         function goBack(){
             document.getElementById("myframe").classList.remove('ready');
             mainIframe.contentWindow.history.back();
@@ -112,7 +117,7 @@
             if(banner){
                 banner.innerHTML = `
                 <header id="appHeader">
-                    <img src="http:localhost:3000/assets/banner.svg" alt="headerBanner">
+                    <img src="http:localhost:3000/assets/banner.png" alt="headerBanner">
                 </header> 
                 `
             }else{
@@ -131,7 +136,7 @@
             body.addEventListener('click', function(e){
                 console.log("body click", e.target.href)
                 
-                    if(e.target.tagName.toLowerCase() === 'area' || (e.target.tagName.toLowerCase() === 'a' &&e.target.href.includes(baseUrl) && e.target.href !== baseUrl+'#')){
+                    if(e.target.tagName.toLowerCase() === 'area' || (e.target.tagName.toLowerCase() === 'a' && e.target.href.includes('https://hklit.lib.cuhk.edu.hk') && e.target.href !== 'https://hklit.lib.cuhk.edu.hk/'+'#')){
                         if(e.target.href.includes('https://hklit.lib.cuhk.edu.hk/explore/')){
                             return
                         }
@@ -151,7 +156,7 @@
                 var anchors = doc.getElementsByTagName("a");
                 for (var i = 0; i < anchors.length; i++) {
                     const href = anchors[i].href;
-                    if(!href.includes(baseUrl) && !href.includes("http://localhost:3000") ){
+                    if(!href.includes('https://hklit.lib.cuhk.edu.hk') && !href.includes("http://localhost:3000") ){
                         anchors[i].onclick = function() {
                             // open prompt
                             alert('此頁面不能於程式中展示，請瀏覽網頁版hklit.lib.cuhk.edu.hk以瀏覽相關內容。 \n This page cannot be shown in this kiosk. Please visit hklit.lib.cuhk.edu.hk for more information.');

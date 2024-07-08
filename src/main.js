@@ -18,7 +18,7 @@ function createWindow() {
   });
   
   // mainWindow.maximize();
-  mainWindow.webContents.openDevTools();
+  // mainWindow.webContents.openDevTools();
 
   mainWindow.loadURL(`http://localhost:${port}/`).then(() => {
     mainWindow.webContents.setZoomFactor(1.35);
