@@ -11,7 +11,7 @@
         <img src="/assets/banner.jpg" alt="headerBanner" onClick="reload();">
       </header> -->
       <div id="infoButton" class="ready">
-            <img src="/assets/goDB-01.png" id="info_btn"  onClick="goIndex();" style="height:40px"/>
+            
             <img src="/assets/home.png" id="home_btn" onClick="goHome();" style="height:40px"/>
             <img src="/assets/back.png" id="back_btn" onClick="goBack()" style="height:40px" />
       </div>
@@ -83,7 +83,7 @@
                 .page-id-6419 .flex-fill {
                     // transform:scale(1.2);
                 }
-                .page-content > .side-bar-widget.bulma .menu-list .menu-item:nth-child(n+4) {
+                .page-content > .side-bar-widget.bulma .menu-list .menu-item:nth-child(n+5) {
                     display: none !important;
                 }
                 .side-bar-widget + .flex-fill{
@@ -109,6 +109,18 @@
             }else{
                 showInfoButton = false
             }
+            const menu = doc.querySelector('ul.menu-list')
+            console.log(menu)
+            if(menu){
+                const li = doc.createElement('li')
+                li.classList = 'menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children'
+                const a = doc.createElement('a')
+                a.href='https://hklit.lib.cuhk.edu.hk/';
+                a.innerHTML = '香港文學資料庫';
+                menu.prepend(a);
+
+            }
+            // menu-item menu-item-type-post_type menu-item-object-page menu-item-has-children
             setTimeout(() => {
                 document.getElementById("myframe").classList.add('ready');
                 // document.getElementById("infoButton").classList.add('ready');
@@ -117,7 +129,7 @@
             if(banner){
                 banner.innerHTML = `
                 <header id="appHeader">
-                    <img src="http:localhost:3000/assets/banner.png" alt="headerBanner">
+                    <img src="http:localhost:3000/assets/banner-01.png" alt="headerBanner">
                 </header> 
                 `
             }else{
